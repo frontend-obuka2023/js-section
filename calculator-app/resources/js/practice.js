@@ -307,4 +307,231 @@ console.log(t);
 
 t = t.toString();
 
-console.log(typeof t);
+console.log(typeof t); // '100.32'
+
+
+
+
+// 3. cas JS-a (21. cas) - 12.12.2023.
+
+console.log('----------- 3. cas JS-a -----------');
+
+// * Implicitna konverzija (konverzija koja se striktino ne navodi)
+
+t = 3 * '3';
+
+console.log(t); // 9
+
+t = 10 -'4';
+
+console.log(t); // 6
+
+t = '20' / 5; // 4
+
+t = 2**'3'; // 8
+
+
+// ! Jos jednom kraci nacin pisanja operatora
+
+t = 0;
+
+// t = t + 6; // ! duzi nacin
+t += 6; // * kraci nacin
+
+t /= 2; // 3
+
+t -= 1; // 2
+
+t *= 2; // 4
+
+
+// * Increment (++) i Decrement (--) operatori
+
+let j = 1;
+let i = j++; // ! i varijabla samo uzima trenutnu vrednost j varijable (1) , ALI istovremeno se potom j varijabla uvecava za 1
+
+console.log(`j = ${j}`); // 2
+console.log(`i = ${i}`); // 1
+
+j = 3;
+i = ++j;
+
+console.log(`j = ${j}`); // 4
+console.log(`i = ${i}`); // 4
+
+let m = 5;
+let k = m+=2;
+
+console.log(m); // 7
+console.log(k); // 7
+
+j = 10;
+i = j--;
+
+console.log(`j = ${j}`); // 9
+console.log(`i = ${i}`); // 10
+
+j = 10;
+i = --j;
+
+console.log(`j = ${j}`); // 9
+console.log(`i = ${i}`); // 9
+
+
+
+// ! Boolean - najcesce se koristi za proveru nekih logickih uslova (npr uz IF metodu ili slicno)  => moze imati ili TRUE ili FALSE vrednost
+
+let myBool = true;
+
+console.log(myBool);
+
+myBool = false;
+
+console.log(myBool);
+
+
+
+// ! Object - slozeni tip podatka koji sluzi za grupisanje podataka
+
+const githubUser = {
+    email: 'test.acc@gmail.com',
+    password: 'test1234'
+};
+
+// alert(`You have succesfully logged in ${githubUser.email}`); // ! ovde smo pristupili property-u email iz objekta githubUser
+
+
+
+// ! Array (Niz) - slozeni tip podatka koji sluzi kao kolekcija podataka
+
+// const myArray = []; // ! deklaracija praznog niza
+
+const myArray = [1,'Hello World',true];
+
+console.log(myArray);
+
+console.log(`Duzina niza je ${myArray.length}`);  // niz.length je kako mozemo pristupiti duzini niza
+
+myArray.push(4);
+
+myArray.push(5,6); // ! PUSH metoda dodaje novi element (ili vise njih) na KRAJ niza
+
+console.log(myArray);
+
+console.log(myArray[2]); 
+
+console.log(myArray[myArray.length-1]); // ! OVO UVEK mozete koristiti za pristupanje poslednjem elementu niza BEZ da znate njegovu duzinu
+
+console.log(myArray[0]);
+
+console.log(myArray[myArray.length-2]);
+
+
+
+// ! Kombinacija Objekata i Nizova
+
+const myStudent = {
+    firstName: 'Petar',
+    lastName: 'Petrovic',
+    age: 25,
+    gender: 'male',
+    isBudgetStudent: true,
+    favoriteBooks: ['LOTR', 'Misery', 'Deca Zla']
+};
+
+// Favorite books of IME_PREZIME (GODINE) are NIZ_KNJIGA
+console.log(`Favorite books of ${myStudent.firstName} ${myStudent.lastName} (${myStudent.age}) are ${myStudent.favoriteBooks}`);
+
+// Student IME_PREZIME is budget student: TRUE/FALSE
+console.log(`Student ${myStudent.firstName} ${myStudent.lastName} is budget student: ${myStudent.isBudgetStudent}`);
+
+
+
+// ! UNDEFINED i NULL 
+
+let someVar;
+
+console.log(someVar); // undefined je vrednost npr ne-inicijalizovanih varijabli
+
+
+someVar = 50;
+
+someVar = null; // null je nepostojeca vrednost, i cesto se dodeljuje varijabli ako hocemo da tu varijablu reset-ujemo (tj obrisemo njenu trenutnu vrednost)
+
+console.log(someVar);
+
+
+
+
+// ! Typeof operator
+
+console.log(typeof(6));  // number (primitivni tip podatka)
+
+console.log(typeof(100.42)); // number 
+
+console.log(typeof(NaN)); // number
+
+console.log(typeof('Welcome!')); // string (primitivni tip podatka)
+
+console.log(typeof(true)); // boolean (primitivni tip podatka)
+
+console.log(typeof(undefined)); // undefined (primitivni tip podatka)
+
+console.log(typeof(null)); // object (slozeni tip podatka)
+
+console.log(typeof(myArray)); // object (slozeni tip podatka (I dalje je Array))
+
+console.log(typeof(myStudent)); // object
+
+
+
+// TODO Homework (3. cas)
+
+/**
+ * DOMACI 3. cas:
+   1. Kreirati varijablu proizvoljnog naziva. U varijablu dodati vrednost koja se dobije tako sto saberu vrednosti 33 (tipa number) i ‘27’ (tipa string). 
+        Obezbediti konverziju (parsiranje) string-a u number kako bi se matematicka operacija uspesno izvrsila. Na kraju napraviti novu varijablu u koju cete dodati vrednost 
+        koja se dobija parsiranjem dobijenog number-a u string.
+   2. Prvu varijablu (tipa number) uvecati za 10 koristeci skraceni tip operatora. Nakon toga istu varijablu dekrementovati za jedan i ispisati konacnu vrednost na konzoli 
+        uz ispis ‘Current value is vrednost_varijable’.
+   3. Kreirati niz sa od sledecih elemenata: ‘hello’ , ‘planet’ , ‘Jupiter’. Na kraju izvrsiti konkatinaciju ovih stringova i rezultat ispisati na konzoli. (HINT: pogledati concate za nizove)
+   4. Kreirati objekat course i u njega dodati property-je: courseName (tipa string) i proizvoljnu vrednost, courseTeacher (tipa string) i proizvoljnu vrednost, duration (tipa number) 
+        i proizvoljnu vrednost i languages (tipa array) i proizvoljan niz elemenata.
+   5. Ispisati na konzoli kompletan niz elemenata (languages property) iz course objekta.
+   6. Ispisati poslednji element istog tog niza na konzoli uz ispis 'Last language is LAST_LANGUAGE'.
+   7. Resetovati vrednost varijable iz prvog zadatka na praznu vrednost uz odgovarajuci tip podatka.
+   8. Proveriti tip podatka varijable iz prvog zadatka i ispisati na konzoli u formatu 'Type of first variable is TYPE_OF_VARIABLE'.
+*/
+
+let randomVar = 33 + +'27';
+
+let randomVarStr = randomVar.toString();
+
+randomVar += 10;
+
+randomVar--;
+
+console.log(`Current value is ${randomVar}`); // 69
+
+let testArray = ['Hello', 'planet', 'Jupiter'];
+
+console.log(`${testArray[0]} ${testArray[1]} ${testArray[2]}!`); // Hello planet Jupiter (DUZI NACIN)
+
+console.log(`Joined strings from array: ${testArray.join(' ')}!`);
+
+const course = {
+   courseName: 'Frontend Programming',
+   courseTeacher: 'Petar Petrovic',
+   duration: 1.5,
+   languages: ['JavaScript', 'HTML5', 'CSS3']
+}
+
+console.log(course.languages);
+
+// course['languages'];
+
+console.log(`Last language is ${course.languages[course.languages.length-1]}`); // 'CSS3'
+
+randomVar = null;
+
+console.log(`Type of first variable is ${typeof(randomVar)}`); // null jer smo u prethodnoj liniji koda resetovali na null (a to je object tip)
