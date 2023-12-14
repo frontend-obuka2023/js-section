@@ -4,10 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./resources/css/styles.css">
+    <script src="./resources/js/vendor.js" defer></script>
+    <script src="./resources/js/app.js" defer></script>
     <title>Calculator App</title>
 </head>
 <body>
-    <h1>Calculator App</h1>
-    <script src="./resources/js/practice.js"></script>
+    <main>
+        <h1 class="main-title">Basic Calculator</h1>
+        <div id="calculator">
+            <input type="number" class="input-number js-input-number">
+            <div class="calculation-buttons">
+                <button type="button" id="btn-multiply">*</button>
+                <button type="button" id="btn-divide">/</button>
+                <button type="button" id="btn-add">+</button>
+                <button type="button" id="btn-subtract">-</button>
+                <button type="button" id="btn-exponent">**</button>
+                <button type="button" id="btn-clear">C</button>
+            </div>
+        </div>
+        <div id="results">
+            <h2 class="current-calculation js-current-calculation">
+                0
+            </h2>
+            <h2>
+                Result is: <span class="current-result js-current-result">0</span>
+            </h2>
+        </div>
+    </main>
+    <!-- <script src="./resources/js/practice.js"></script> -->
 </body>
 </html>

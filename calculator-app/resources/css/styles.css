@@ -1,5 +1,32 @@
-h1 {
-    margin: 75px 0;
+.main-title {
+    color: black;
     text-align: center;
-    color: #dd3300;
+    margin-top: 150px;
+}
+
+#calculator {
+    text-align: center;
+}
+
+.input-number {
+    padding: 15px;
+    width: 300px;
+}
+
+.calculation-buttons {
+    margin-top: 50px;
+}
+
+.calculation-buttons button {
+    height: 50px;
+    width: 50px;
+    font-weight: bolder;
+}
+
+#results {
+    text-align: center;
+}
+
+.current-result {
+    font-weight: bold;
 }
