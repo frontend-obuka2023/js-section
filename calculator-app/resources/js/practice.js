@@ -535,3 +535,214 @@ console.log(`Last language is ${course.languages[course.languages.length-1]}`); 
 randomVar = null;
 
 console.log(`Type of first variable is ${typeof(randomVar)}`); // null jer smo u prethodnoj liniji koda resetovali na null (a to je object tip)
+
+
+
+
+// 5. cas JS-a (23. cas 19.12.2023.)
+
+console.log('------- 5. cas JS-a ---------');
+
+// ! OPERATORI POREDJENJA - vracaju boolean (true ili false)
+/*
+ 1. Loose operator (operator koji labavo poredi vrednosti - poredi samo vrednosti)
+ 2. Strict operator (operator koji striktno poredi vrednosti - pored i tip podatak i vrednosti)
+ 3. Operatori poredjenja 'vece manje'
+ 4. NOT operator
+*/
+
+// * Loose operator
+
+console.log(10 == 10); // true
+
+console.log('world' == 'world'); // true
+
+const ex1 = '44';
+const ex2 = 44;
+
+console.log(ex1 == ex2); // true, jer poredi samo vrednosti, a ne i tip podatka (jedan je string, drugi je number)
+
+console.log(true == 'true'); // false
+
+console.log(5 != 5); // false
+
+
+// * Strict operator (! u praksi UVEK treba koristiti ovaj operator)
+
+console.log(10.5 === 10.5); // true
+
+console.log(10.5 === '10.5'); // false
+
+console.log('hello' === 'hello'); // true
+
+console.log(3 !== 3); // false
+
+
+// *   > , < , >= , <=
+
+console.log(25 > 3); // true
+console.log(-15.5 < 0); // true
+console.log(5 >= 5); // true
+console.log(9 <= 9); // true
+console.log(99 < 1); // false 
+console.log('4' > 3); // true (! Dakle, radi i kad poredite npr string i number ili string i string)
+
+
+
+// * NOT operator (!)
+
+console.log(!false); // true (jer je true suprotno od false)
+console.log(!true); // false (jer je false suprotno od true)
+console.log(!20 > 10); // false (prvo jer 20 > 10 jeste true, ali negacija od true je false i zato vraca false)
+
+
+// * Poredjenje stringova
+
+console.log('b' > 'a'); // true
+console.log('ab' > 'aa'); // true
+
+
+
+// ! STATEMENTI (klauzule)
+
+// 1. IF
+// 2. IF - ELSE
+// 3. IF - ELSE IF - ELSE
+
+// * IF 
+
+// U IF blok koda upadamo SAMO ako zadati parametar poredjenja vraca truthy vrednost
+if (8 > 5) {
+    console.log('Broj 8 je veci od broja 5!');
+}
+
+if (1 !== 1) {  // ovaj logicki uslov nije tacan i zato ne upada u IF
+    console.log('kecevi nisu jednaki');
+}
+
+
+
+// * IF - ELSE
+
+let myNumb = 100/100 - 1 - 9; // 0
+
+if (myNumb > 0) {
+    console.log(`${myNumb} je veci od 0!`);
+} else { // ! U else blok upadamo uvek ako u IF blok nismo
+    console.log(`${myNumb} nije veci od 0!`);
+}
+
+
+
+// * IF - ELSE IF - ELSE
+
+if (myNumb > 0) {
+    console.log('Broj je veci od 0!');
+} else if (myNumb < 0) {
+    console.log('Broj je manji od 0!');
+} else {
+    console.log('Broj je jednak nuli!');
+}
+
+
+// TODO Krzo prompt prozor ukucati neki broj i proveriti da li je taj broj veci/manji/jednak nuli i ispisati odgovarajucu poruku
+
+const myEnteredNumb = prompt('Please enter your number:'); // ovo vraca uvek STRING, pa za svaki slucaj radimo konvertovanje (cast) u Number
+
+if (+myEnteredNumb > 0) {
+    console.log(`${myEnteredNumb} je broj veci od nule!`);
+} else if (+myEnteredNumb < 0) {
+    console.log(`${myEnteredNumb} je broj manji od nule!`);
+} else {
+    console.log(`${myEnteredNumb} je broj jednak nuli!`);
+}
+
+
+if (myEnteredNumb >= 0) { // ovde ulazimo ako je broj veci od nule ili nula
+    if (myEnteredNumb > 0) {
+        console.log('Broj je pozitivan');
+    } else {
+        console.log('Broj je nula');
+    }
+} else {
+    console.log('Broj je negativan');
+}
+
+
+
+// ! Poredjenje slozenih tipova podataka (objekata i nizova)
+
+const ob1 = {
+    name: 'test'
+}
+
+const ob2 = {
+    name: 'test'
+}
+
+console.log(ob1 === ob2); // false (false je jer se slozeni tipovi uvek porede po REFERENCI a ne po vrednosti)
+
+const arr1 = [
+    1,2,3
+];
+
+const arr2 = [
+    1,2,3
+];
+
+console.log(arr1 === arr2); // false
+
+const osoba1 = {
+    ime: 'Petar',
+    prz: 'Petrovic'
+}
+
+const osoba2 = {
+    ime: 'Petar',
+    prz: 'Petrovic'
+}
+
+console.log(osoba1 === osoba2); // false
+
+
+// TODO 5. cas domaci
+ /**
+  * 1. Kreirati dve varijable tipa number sa vrednostima 30 i 50
+  * 2. Uporediti varijable koristeci == i === i rezultate poredjenja ispisati na konzoli
+  * 3. Uporediti varijable koristeci != i !== i rezultate poredjenja ispisati na konzoli
+  * 4. Rezultat poredjenja iz 2. zadatka invert-ovati uz NOT operator i ispisati na konzoli
+  * 5. Kreirati 3. varijablu sa vrednoscu '30' (tipa string)
+  * 6. Uporediti varijablu sa vrednoscu 30 (number) i '30' (string) pomocu oba tipa equality operatora
+  *    (== i ===), uporediti razlike rezultata poredjenja
+  * 7. Kreirati 4. varijablu (npr. promptAnswer) cija se vrednost dobija kroz prompt prozor browser-a (!napomena: ovde se uvek vraca string)
+  * 8. Vrednost varijable proveriti kroz if - else if - else uslove i shodno tome ispisati status o varijabli u formatu
+  *    `Value ${promptAnswer} is ________`
+ */
+
+const v1 = 30;
+const v2 = 50;
+
+console.log(`variable1 is equal to variable 2: ${v1 == v2}`); // false
+console.log(`variable1 is equal to variable 2: ${v1 === v2}`); // false
+console.log(`variable1 is not equal to variable 2: ${v1 != v2}`); // true
+console.log(`variable1 is not equal to variable 2: ${v1 !== v2}`); // true
+
+const compareOfVars = v1 === v2; // boolean vrednost smestamo u compareOfVars
+
+console.log(compareOfVars); // false
+console.log(!compareOfVars); // true  // ! Revert-ovan false u true pomocu ! znaka (NOT operatora)
+
+const v3 = '30';
+
+console.log(`variable3 is equal to number 30: ${v3 === 30}`); // false
+console.log(`variable3 is equal to number 30: ${v3 == 30}`); // true
+
+const promptAnswer = prompt('Enter your value:');
+
+if (promptAnswer > 0) {
+    console.log(`Value ${promptAnswer} is positive.`);
+} else if (promptAnswer < 0) {
+    console.log(`Value ${promptAnswer} is negative.`);
+} else {
+    console.log(`Value is zero.`);
+}
