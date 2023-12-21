@@ -647,7 +647,8 @@ if (myNumb > 0) {
 
 // TODO Krzo prompt prozor ukucati neki broj i proveriti da li je taj broj veci/manji/jednak nuli i ispisati odgovarajucu poruku
 
-const myEnteredNumb = prompt('Please enter your number:'); // ovo vraca uvek STRING, pa za svaki slucaj radimo konvertovanje (cast) u Number
+// const myEnteredNumb = prompt('Please enter your number:'); // ovo vraca uvek STRING, pa za svaki slucaj radimo konvertovanje (cast) u Number
+const myEnteredNumb = 10;
 
 if (+myEnteredNumb > 0) {
     console.log(`${myEnteredNumb} je broj veci od nule!`);
@@ -737,7 +738,8 @@ const v3 = '30';
 console.log(`variable3 is equal to number 30: ${v3 === 30}`); // false
 console.log(`variable3 is equal to number 30: ${v3 == 30}`); // true
 
-const promptAnswer = prompt('Enter your value:');
+// const promptAnswer = prompt('Enter your value:');
+const promptAnswer = 5;
 
 if (promptAnswer > 0) {
     console.log(`Value ${promptAnswer} is positive.`);
@@ -745,4 +747,205 @@ if (promptAnswer > 0) {
     console.log(`Value ${promptAnswer} is negative.`);
 } else {
     console.log(`Value is zero.`);
+}
+
+
+
+// 6. cas JS (24. cas) - 21.12.2023.
+
+console.log('---------- 6. cas JS-a (24. cas) -----------');
+
+// ! Visestruki logicki uslovi
+
+// * 1. logicko AND (logicko i) -> && -> ovaj operator kaze da SVI zadati logicki uslovi moraju biti zadovoljeni
+
+    // true && true -> daju true
+    // true && false -> daju false
+    // false && false -> daju false
+
+// * 2. logicko OR (logicko ili) -> || -> ovaj operator kaze da BAR jedan logicki uslov bude zadovoljen (bar 1 logicki operator mora dati true)
+
+    // true || true -> daju true
+    // true || false -> daju true 
+    // false || false -> daju false
+
+
+let t1 = -5;
+
+if (t1 < 0 && t1 === -5) {
+    console.log(`Broj ${t1} je ${t1}`);
+    t1 = 100;
+}
+
+if (t1 > 0 || t1 === 0) {
+    console.log(`Broj ${t1} je ili veci od 0 ili jednak nuli.`);
+}
+
+// * kombinacija && i ||  -> u ovom slucaju && ima prednost provere
+
+if (t1 > 0 && t1 === 2 || t1 === 9) {
+    console.log(`Upao sam u ovaj combo blok 1`);
+}
+
+if (t1 > 0 && (t1 === 2 || t1 === 9)) { // ! nacin ako hocete da prvo || proverite , pa tek onda rezultat tog poredjenja da poredite sa &&
+    console.log(`Upao sam u ovaj combo blok 2`);
+}
+
+
+
+// ! Ternarni (kondicioni) operator
+
+// let a1 = t1 < 0; // ! false
+
+// 't1 je manji od 0'
+// 't1 je ili veci ili jednak 0'
+
+
+// ! duzi nacin
+// let a1;
+
+// if (t1 < 0) {
+//     a1 = 't1 je manji od 0';
+// } else {
+//     a1 = 't1 je ili veci ili jednak 0';
+// }
+
+// ! kraci nacin (uz ternarni operator)
+// t1 = -3;
+
+let a1 = t1 < 0
+    ? 't1 je manji od 0' 
+    : 't1 je ili veci ili jednak 0';
+
+console.log(a1);
+
+
+// * Kombinacija IF - ELSE blokova i ternarnog operatora
+
+if (t1 < 0) {
+    a1 = 't1 je manji od 0';
+} else {
+    a1 = t1 === 0 
+        ? 't1 je 0'
+        : 't1 je veci od nule';
+}
+
+console.log(a1);
+
+
+
+// ! Truty i Falsy vrednostima
+
+/**
+ * Falsy vrednosti su: '', ``, "", 0, NaN, false, null, undefined, [], {}
+ * Truty vrednosti su: 'sdfhsdajklfh', `a`, 23, -12, true, [1,2,3], {name: 'Marko Markovic'}
+ */
+
+let val2 = '';
+let val3 = '6. cas JS-a';
+let val4 = 15;
+
+if (val2) {
+    console.log('prosao falsy test');
+    // alert('prosao');
+}
+
+if (val3) {
+    console.log('prosao truty test');
+    // alert('prosao 2');
+}
+
+if(val4) {
+    console.log('prosao drugi truty test');
+}
+
+let val5 = val4 > 0 && val4 === 0
+    ? val4
+    : '';
+
+console.log(val5);
+
+
+// ! Tips:
+
+// * 1. truty ili falsy vrednost mozemo da bukvalno pretvorimo u TRUE ili FALSE
+
+let val5E = !!val5;
+
+console.log(val5E); // FALSE 
+
+
+// * 2. dobijanje vrednosti varijable na osnovu operatora
+
+let uName = 'test@gmail.com';
+
+let myName = uName || 'not-defined@gmail.com';
+
+console.log(myName);
+
+let registeredUser = true;
+
+myName = registeredUser && 'marko@gmail.com';
+
+console.log(myName); // 'marko@gmail.com'
+
+
+
+// ! SWITCH CASE
+
+const grade = 10;
+
+switch(grade) {
+    case 1:
+        console.log('Ocena je 1. 😥');
+        break;
+    case 2:
+        console.log('Ocena je 2. 😣');
+        break;
+    case 3: 
+        console.log('Ocena je 3. 😑');
+        break;
+    case 4: 
+        console.log('Ocena je 4. 😊');
+        break;
+    case 5:
+        console.log('Ocena je 5. 😁');
+        break;
+    default:
+        console.log('Ocena nije u rangu od 1 do 5.');
+        break;
+}
+
+
+// TODO Domaci 6. cas
+
+// 1. Prepraviti IF - ELSE IF - ELSE deo u kalkulatoru koristeci SWITCH - CASE
+// 2. Kreirati varijablu score i postaviti je na vrednost unetu u prompt prozoru. Potom napraviti scoreRating varijablu
+//  - scoreRating varijablu postaviti na 'Excellent' vrednost ako je vrednost score varijable >= od 80
+//  - u suprotnom, scoreRating postaviti na 'You can do better' vrednost
+//  - KORISTITI TERNARNI OPERATOR ZA OVAJ ZADATAK
+// 3. Za prethodni zadatak napraviti IF blok, i proveriti sledece:
+//  - Proveriti da li je score >= 80 ILI da li je scoreRating jednak 'You can do better'
+//  - U oba ova slucaja (ako je bilo koji zadovoljen) ispisati konzol poruku 'You have passed.'
+//  - U suprotnom ispisati konzol poruku 'Try again.'
+// 4. Napraviti novu proveru i proveriti sledece:
+//  - Da li je score truty vrednost I da li je score >= 80 ILI da li je scoreRating jednak 'Excellent'
+//  - Ako je uslov pomenuti tacan ispisati konzol poruku: 'You took and passed the test.'
+//  - U suprotnom opet ispisati 'Try again.'
+
+let score = prompt('Please enter your score');
+
+let scoreRating = +score >= 80 ? 'Excellent' : 'You can do better';
+
+
+if (score >= 80 || scoreRating === 'Excellent') {
+    console.log('You have passed.')
+} else {
+    console.log('Try again');
+}
+
+if (score && score >= 80 || scoreRating === 'Excellent') {
+    console.log('You took and passed the test.');
+} else {
+    console.log('Try again.');
 }

@@ -23,6 +23,9 @@ function writeToOperationHistory(typeOfOperation, previousResult, enteredNumber,
     console.log(logOfOperations);
 }
 
+// ! Verzija 1 - sa odvojenim funkcijama
+
+/*
 // Adding (Sabiranje)
 function add() {
     const enteredNumber = getUserInput();
@@ -67,6 +70,88 @@ function exponentiation() {
     writeOutput('**', initResult, enteredNumber);
     writeToOperationHistory('EXPONENTIATION', initResult, enteredNumber, currentResult);
 }
+*/
+
+// ! Verzija 2 - sa IF - ELSE klauzulama
+
+function add() {
+    mathOperation('ADDING');
+}
+
+function subtract() {
+    mathOperation('SUBTRACT');
+}
+
+function multiply() {
+    mathOperation('MULTIPLY');
+}
+
+function divide() {
+    mathOperation('DIVIDE');
+}
+
+function exponentiation() {
+    mathOperation('EXPONENTIATION');
+}
+
+// function mathOperation(operationType) {
+//     const enteredNumber = getUserInput();
+//     const initResult = currentResult;
+//     let operationSign;
+//     if (operationType === 'ADDING') {
+//         currentResult += enteredNumber;
+//         operationSign = '+';
+//     } else if (operationType === 'SUBTRACT') {
+//         currentResult -= enteredNumber;
+//         operationSign = '-';
+//     } else if (operationType === 'MULTIPLY') {
+//         currentResult *= enteredNumber;
+//         operationSign = '*';
+//     } else if (operationType === 'DIVIDE') {
+//         currentResult /= enteredNumber;
+//         operationSign = '/';
+//     } else {
+//         // ovde upadamo ako je operationType === 'EXPONENTIATION'
+//         currentResult **= enteredNumber;
+//         operationSign = '**';
+//     }
+//     writeOutput(operationSign, initResult, enteredNumber);
+//     writeToOperationHistory(operationType, initResult, enteredNumber, currentResult);
+// }
+
+
+// ! Verzija 3 - sa SWITCH - CASE
+
+function mathOperation(operationType) {
+    const enteredNumber = getUserInput();
+    const initResult = currentResult;
+    let operationSign;
+    switch(operationType) {
+        case 'ADDING':
+            currentResult += enteredNumber;
+            operationSign = '+';
+            break;
+        case 'SUBTRACT':
+            currentResult -= enteredNumber;
+            operationSign = '-';
+            break;
+        case 'MULTIPLY':
+            currentResult *= enteredNumber;
+            operationSign = '*';
+            break;
+        case 'DIVIDE':
+            currentResult /= enteredNumber;
+            operationSign = '/';
+            break;
+        default:
+            currentResult **= enteredNumber;
+            operationSign = '**';
+            break;
+    }
+    writeOutput(operationSign, initResult, enteredNumber);
+    writeToOperationHistory(operationType, initResult, enteredNumber, currentResult);
+}
+
 
 // clear (resets: current result, input of user, deletes the log and outputs)
 function clear() {
