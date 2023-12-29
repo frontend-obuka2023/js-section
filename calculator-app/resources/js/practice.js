@@ -933,7 +933,8 @@ switch(grade) {
 //  - Ako je uslov pomenuti tacan ispisati konzol poruku: 'You took and passed the test.'
 //  - U suprotnom opet ispisati 'Try again.'
 
-let score = prompt('Please enter your score');
+// let score = prompt('Please enter your score');
+let score = 80;
 
 let scoreRating = +score >= 80 ? 'Excellent' : 'You can do better';
 
@@ -948,4 +949,296 @@ if (score && score >= 80 || scoreRating === 'Excellent') {
     console.log('You took and passed the test.');
 } else {
     console.log('Try again.');
+}
+
+
+// 7. cas JS-a (24. cas) 28.12.2023.
+
+console.log('--------- 7. cas JS-a (24. cas) ----------');
+
+// ! Petlje (loops)
+
+/**
+ * 1. FOR petlja (sluzi za pozivanje nekog koda nekoliko puta u zavisnosti od npr nekog brojaca)
+ * 2. FOR OF petlja (sluzi za pozivanje nekog koda nad svakim elementom nekog niza)
+ * 3. FOR IN petlja (sluzi za vracanje svih KEY-eva (naziva property-a) nekog objekta i eventualno vrednosti vezane za te kljuceve)
+ * 4. WHILE petlja (sluzi za izvrsavanje nekog koda dokle god je odredjeni logicki uslov zadovoljen)
+ * 5. DO WHILE petlja
+ */
+
+
+// * 1. FOR petlja
+
+for (let counter = 1; counter <= 5; counter++) {
+    console.log(`Counter of current iteration is ${counter}`);
+}
+
+// Primer --> program koji racuna zbir prvih 100 prirodnih brojeva
+
+let sum = 0;
+
+for (let i = 1; i <= 100; i++) {
+    sum += i;
+}
+
+console.log(`Suma prvih 100 prirodnih brojeva je ${sum}`);
+
+
+// * FOR OF petlja
+
+const programmingLangs = ['Java', 'C#', 'Python', 'JS', 'Ruby']; // length = 5
+
+// 1. nacin - standardan FOR loop
+
+// for (let j = 0; j < programmingLangs.length; j++) {
+//     console.log(programmingLangs[j]);
+// }
+
+// 2. nacin - uz FOR OF loop
+
+for (let lang of programmingLangs) {
+    console.log(lang);
+}
+
+
+const greeting = 'Welcome'; // STRING je NIZ karaktera --> ovaj string ima 7 karaktera (elemenata)
+
+for (let ch of greeting) {
+    console.log(ch);
+}
+
+// ! pristupanje vrednostima property-a nekog objekta
+
+const testOb = {
+    name: 'Test'
+};
+
+// console.log(testOb.name);  ! prvi nacin uz DOT sintaksu
+
+console.log(testOb['name']); // ! drugi nacin uz SQUARE BRACKET sintaksu
+
+// * FOR IN petlja
+
+const someUser = {
+    name: 'Pera Peric',
+    email: 'pera@gmail.com',
+    gender: 'male',
+    age: 34,
+    isStudent: false
+};
+
+// for (let prop in someUser) {
+//     console.log(prop);
+// }
+
+for (let prop in someUser) {
+    console.log(`${prop}: ${someUser[prop]}`); // name: 'Pera Peric' , email: 'pera@gmail.com'
+}
+
+
+// * Kombinacija FOR OF i FOR IN petlje
+
+const bankAccTest = {
+    owner: 'Petar Petrovic',
+    pin: 4444,
+    contactPhone: '063333333',
+    transactions: [300, -150, 500, -250, 1000]
+};
+
+for (let key in bankAccTest) {
+    console.log(`${key} : ${bankAccTest[key]}`); // ! DINAMICKO PROLAZENJE KROZ OBJEKAT tj njegove property-e i njihove vrednosti
+    if (key === 'transactions') {
+        const accTransactionsArray = bankAccTest.transactions;
+        for (let i = 0; i < accTransactionsArray.length; i++) {
+            let orderNumber = i + 1;
+            console.log(`Tvoja transakcija ${orderNumber}. = ${accTransactionsArray[i]}`)
+        }
+    }
+}
+
+
+// * WHILE petlja
+
+// ! Primer BESKONACNE petlje - beskonacna je jer logicki uslov je uvek zadovoljen (vrednost provere uvek spada u Truty grupu vrednosti)
+// let isUserLoggedIn = true;
+let m2 = 0;
+
+// while (isUserLoggedIn) {
+//     console.log(m2);
+//     m2++;
+// }
+
+while (m2 < 5) {
+    console.log(m2);
+    m2++;
+}
+
+// * DO - WHILE petlja
+
+m2 = 0;
+
+do {
+    console.log(m2);
+    m2++;
+} while (m2 < 5);
+
+
+
+// * CONTINUE - sluzi ako hocemo da preskocimo odredjenu iteraciju neke petlje
+
+for (let u = 0; u <= 5; u++) {
+    if (u % 2 !== 0 || u === 0) {
+        continue;
+    }
+    console.log(`u = ${u}`);
+}
+
+
+
+// * TRY - CATCH - FINALLY sintaksa (blokovi)
+let isDataLoaded = false; // npr ova varijabla utice na vrtenje spinner-a dok cekamo podatke (trenutno se vrti jer podaci nisu ucitani)
+
+try {
+    // npr neki async poziv ka bekendu (dobavljanje podataka sa servera)
+    console.log('marko');
+    // console.log(adsfsd);
+} catch (error) {
+    console.log(error.name + ' --> ' + error.message);   // npr ispisemo gresku ako nam server iz nekog razloga ne vraca ili ne da podatke
+} finally {
+    isDataLoaded = true; // ovde bez obzira na to da li su podaci ucitani ili smo uhvatili neku gresku u catch bloku, nas spinner svakako staje sa vrtenjem
+}
+
+
+// TODO 7. cas JS-a domaci:
+
+// 1. Uporediti vrednost kreirane varijable (const someNum = prompt('Please enter your number')) pomocu ternarnog operatora tako da se ispise da li je broj pozitivan ili negativan
+// 2. Dodati OR (||) logicki operator kako bi se proverilo da li je someNum vrednost nula ili veca od nule i rezultat ispisati na konzoli zajedno
+// 3. Dodati breakpoint u prethodnom izvrsavanju if bloka i utvrditi potencijalnu gresku na osnovu iscitavanja vrednosti
+
+// 4. za svaku liniju koda u nastavku ispisati sta vraca:
+// 
+//     const userEmail = 'marko@gmail.com';
+//     const backupEmail = '';
+//     console.log(userEmail === 'marko@gmail.com');
+//     console.log(userEmail);
+
+//     console.log(userEmail || null);
+//     console.log(backupEmail || 'milan@gmail.com');
+//     console.log(backupEmail || '');
+//     console.log(backupEmail || null || 'petar@gmail.com');
+
+//     console.log(userEmail && 'petar@gmail.com');
+//     console.log(backupEmail && 'petar@gmail.com');
+//     console.log(userEmail && ''); 
+//  
+//
+
+// 5. Kreirati varijablu "dayOfTheWeek" i postaviti na danasnji dan (hardkodovati, npr: 'tuesday'). Promeniti case-ove switch opcijom i u skladu sa tim ispisati vrednost na konzoli.
+
+// 6. Ispisati proizvod svih brojeva od 1 do 10
+
+// 7. Kreirati niz "foreignLanguages" i 3 jezika dodati u njega. Svaki jezik treba da ima svoj naziv i recenicu na tom jeziku. 
+
+// 8. Nakon toga, proci kroz niz jezika i ispisati svaki element u formatu:
+//    'Here is a sentence on LANGUAGE_NAME : LANGUAGE_SENTENCE'
+
+// 9. Za PRVI jezik iz foreignLanguages dodati (nalepiti) jos jedan property -> teachers niz nastavnika koji predaju jezik (3). 
+// Za svakog od nastavnika napraviti property firstName i lastName i dodeliti neke vrednosti.
+
+// 10. Ispisati redni broj nastavnika te njegovo ime i prezime i taj jezik koji predaje u formatu:
+// Teacher number BROJ : IME PREZIME is teaching JEZIK
+
+// 1. zadatak
+
+const someNum = prompt('Please enter your number:');
+
+let answerSomeNum = someNum > 0 ? `${someNum} is positive!` : `${someNum} is negative!`;
+
+console.log(`1. zadatak: ${answerSomeNum}`);
+
+// 2. i 3. zadatak
+
+if(someNum === 0 || someNum > 0) {
+  console.log(`${someNum} is either equal to 0 or positive value!`);
+}
+
+// 4. zadatak
+
+const userEmail = 'marko@gmail.com';
+const backupEmail = '';
+console.log(userEmail === 'marko@gmail.com'); // ! vraca -> true
+console.log(userEmail); // ! vraca -> 'marko@gmail.com'
+
+console.log(userEmail || null); // ! vraca -> 'marko@gmail.com'
+console.log(backupEmail || 'milan@gmail.com'); // ! vraca -> 'milan@gmail.com'
+console.log(backupEmail || ''); // ! vraca -> ''
+console.log(backupEmail || null || 'petar@gmail.com'); // ! vraca -> 'petar@gmail.com'
+
+console.log(userEmail && 'petar@gmail.com'); // ! vraca -> 'petar@gmail.com'
+console.log(backupEmail && 'petar@gmail.com'); // ! vraca -> ''
+console.log(userEmail && ''); // ! vraca -> ''
+
+
+
+// 5. zadatak
+
+const dayOfTheWeek = 'tuesday';
+
+switch(dayOfTheWeek) {
+  case 'monday':
+      console.log(`Today is Monday!`);
+      break;
+  case 'tuesday':
+      console.log(`Today is Tuesday!`);
+      break;
+  case 'wednesday':
+      console.log(`Today is Wednesday!`);
+      break;
+  case 'thursday':
+      console.log(`Today is Thursday!`);
+      break;
+  case 'friday':
+      console.log(`Today is Friday!`);
+      break;
+  case 'saturday':
+      console.log(`Today is Saturday!`);
+      break;
+  case 'sunday':
+      console.log(`Today is Sunday!`);
+      break;
+}
+
+// 6. zadatak
+
+let multiplyResult = 1;
+
+for(let j = 1; j <= 10; j++) {
+  multiplyResult *= j;
+}
+
+console.log(`Result of multiplying first 10 numbers ${multiplyResult}`); // Result of multiplying first 10 numbers 3628800
+
+
+// 7. zadatak
+const foreignLanguages = [
+  {name: 'English', sentence: 'This is some sentence on English.'},
+  {name: 'German', sentence: 'JS ist sehr gut.'},
+  {name: 'Latin', sentence: 'Lorem ipsum dolor sit amet.'}
+];
+
+// 8. zadatak
+for(let language of foreignLanguages) {
+  console.log(`Here is a sentence on ${language.name} : ${language.sentence}`);
+}
+
+// 9. zadatak
+foreignLanguages[0].teachers = [
+  {firstName: 'Marko', lastName: 'Markovic'},
+  {firstName: 'Petar', lastName: 'Petrovic'},
+  {firstName: 'Sara', lastName: 'Saric'}
+]
+
+// 10. zadatak
+for(let i=0; i < foreignLanguages[0].teachers.length; i++) {
+  console.log(`Teacher number ${i+1}: ${foreignLanguages[0].teachers[i].firstName} ${foreignLanguages[0].teachers[i].lastName} is teaching ${foreignLanguages[0].name}`);
 }
