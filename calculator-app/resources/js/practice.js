@@ -1150,7 +1150,8 @@ try {
 
 // 1. zadatak
 
-const someNum = prompt('Please enter your number:');
+// const someNum = prompt('Please enter your number:');
+const someNum = 50;
 
 let answerSomeNum = someNum > 0 ? `${someNum} is positive!` : `${someNum} is negative!`;
 
@@ -1239,6 +1240,212 @@ foreignLanguages[0].teachers = [
 ]
 
 // 10. zadatak
-for(let i=0; i < foreignLanguages[0].teachers.length; i++) {
-  console.log(`Teacher number ${i+1}: ${foreignLanguages[0].teachers[i].firstName} ${foreignLanguages[0].teachers[i].lastName} is teaching ${foreignLanguages[0].name}`);
+const teachersArr = foreignLanguages[0].teachers;
+for(let i=0; i < teachersArr.length; i++) {
+  console.log(`Teacher number ${i+1}: ${teachersArr[i].firstName} ${teachersArr[i].lastName} is teaching ${foreignLanguages[0].name}`);
 }
+
+
+// ! 8. cas JS-a (26. cas)
+
+console.log('-------------- 8. cas JS-a (26. cas) -------------');
+
+// * Primitivni (vrednosni) tipovi podataka:
+/*
+    1. Number
+    2. String
+    3. Boolean
+    4. Null
+    5. Undefined
+    6. Symbol
+*/
+
+let testBool = true;
+let testBool2 = testBool;
+
+// * Slozeni (referentni) tipovi podataka:
+/*
+    1. Funkcije
+    2. Nizovi
+    3. Objekti
+*/
+
+let testObj = {
+    name: 'Petar Petrovic',
+    age: 30
+}
+
+let testObj2 = testObj;
+
+testObj.age = 40;
+
+console.log(testObj);
+console.log(testObj2);
+
+// ! Funkcije
+
+const personObj = {
+    name: 'Marko Markovic',
+    sayHello: function() {
+        console.log('Hello !'); // Ova funkcija jeste METODA objekta personObj
+    }
+}
+
+personObj.sayHello();
+
+
+// * Function declaration (deklarisanje funkcija)
+
+function myFunc(x) {
+    return `Kvadratni koren broja ${x} je ${Math.sqrt(x)}`;
+}
+
+console.log(myFunc(9));
+
+// * Function expression (ekspresija funkcija) - dozvoljava smestanje funkcija u varijable
+
+const myFunc2 = function(x, y) {
+    return x*y;
+}
+
+console.log(myFunc2(5,2));
+
+
+// * Hoisting (podizanje koda) :
+/**
+ * 1. Kod deklarisanih funkcija funkcionise tako sto funkcije bivaju podignute na nivou svog scope-a, 
+ *      a to znaci da funkcija kreiranu na ovaj nacin mozete pozvati i PRE nego sto je deklarisete.
+ * 2. Kod izrazenih funkcija hoisting ne radi. To znaci da ne mozete pozvati neku funkciju (kreiranu na ovaj nacin)
+ *      pre nego sto je ona definisana u kodu.
+*/
+
+helloW();
+
+function helloW() {
+    console.log('Hello WOrld');
+}
+
+// helloS(); // ! Cannot access 'helloS' before initialization
+
+const helloS = function() {
+    console.log('Zdravo!');
+}
+
+
+const getCurrentYear = function() {
+    const date = new Date(); // pravimo instancu Date klase
+    return date.getFullYear();
+}
+
+console.log(getCurrentYear());
+
+
+// ! Anonimne funkcije - su funkcije koje nemaju naziv, i najcesce se koriste kao callback funkcije drugih funkcija
+// Primeri: setTimeout, setInterval, za neki listener
+
+setTimeout(function() {
+    console.log('Pozivam se nakon 2 sekunde.')
+},2000);
+
+// setInterval(function() {
+//     console.log('Testing set interval')
+// }, 3000);
+
+const btnMultiplyTest = document.getElementById('btn-multiply');
+
+btnMultiplyTest.addEventListener('click', function() {
+    alert('Your button is working!');
+});
+
+
+// ! Arrow funkcije ( (x,y) => {x*y} )
+
+const myFirstArrowFunc = (s,v) => {
+    return s+v;
+}
+
+console.log(myFirstArrowFunc(20,30));
+
+const addNumbers = (s,v) => s+v;
+const divideNumbers = (s,v) => s/v;
+
+console.log(addNumbers(10,5));
+console.log(divideNumbers(10,5));
+
+const noParamFunc = () => {
+    console.log('Nemam parametre, a opet radim :)');
+}
+
+noParamFunc();
+
+const oneParamFunc1 = (z) => {
+    if (typeof z !== 'number') {
+        alert('You must pass a number!');
+        return;
+    }
+    return Math.sqrt(z);
+}
+
+console.log(oneParamFunc1(25));
+
+const oneParamFunc2 = (z) => Math.sqrt(z);
+
+console.log(oneParamFunc2(36));
+
+const oneParamFunc3 = z => Math.sqrt(z); // ! ovo moze bez oblastih zagrada SAMO ako imate 1 parametar
+
+console.log(oneParamFunc3(100));
+
+// TODO 8. cas JS-a ZADATAK ZA VEZBU:
+/*
+    1. Prepraviti sledecu funkciju:
+ * 
+ *          function sumUp(a, b) {
+ *              return a + b;
+ *          } 
+ * 
+ *     u format ARROW funkcije.
+ * 
+ *  2. U istu funkciju (sumUp) za parametar b dodati default vrednost, koja ce biti koriscena u slucaju da se vrednost
+ *      ne prosledi (npr 0).
+ * 
+ *  3. Kreirati u DOM-u dva button-a (Start Counting i Stop Counting).
+ *  4. Kreirati po jedan event za ta oba button-a.
+ *  5. Kada se klikne start counting button, na svaki sekund neka se na konzoli ispise trenutna vrednost counter-a.
+ *  6. U momentu kada se klikne na stop counting button, ispisivanje na konzoli counter-a treba da prestane.
+*/
+
+// * 1. nacin
+const sumUpArrow = (a,b) => {
+    return a+b;
+}
+
+// * 2. nacin
+const sumUpArrow2 = (a,b) => a+b;
+
+console.log(sumUpArrow(3,4));
+console.log(sumUpArrow2(6,5));
+
+
+const sumUp2 = (a=0,b=0) => a+b;
+
+console.log(sumUp2());
+
+
+const btnStart = document.getElementById('btn-start');
+const btnStop = document.getElementById('btn-stop');
+let myCounter = 0;
+let isStopCounting = false;
+
+btnStart.addEventListener('click', () => {
+    setInterval(() => {
+        if (!isStopCounting) {
+            ++myCounter;
+            console.log(`Counter is ${myCounter}`);
+        }
+    }, 1000);
+});
+
+btnStop.addEventListener('click', () => {
+    isStopCounting = true;
+});

@@ -30,3 +30,10 @@
 .current-result {
     font-weight: bold;
 }
+
+/* Test part */
+
+#btn-start,
+#btn-stop {
+    width: 200px;
+}
