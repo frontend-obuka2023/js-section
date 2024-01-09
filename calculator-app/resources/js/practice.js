@@ -1449,3 +1449,341 @@ btnStart.addEventListener('click', () => {
 btnStop.addEventListener('click', () => {
     isStopCounting = true;
 });
+
+
+
+// ! 9. cas (JS-a) (27. cas) 09.01.2024.
+
+console.log('-------------- 9. cas JS (27. cas) ----------------');
+
+// ! Nizovi
+
+// 1. nacin kreiranja niza u JS-u
+const arrOfNums = [1,2,3];
+
+// 2. nacin kreiranja niza (uz pomocu konstruktora klase Array)
+const arrOfNums2 = new Array(4,5,6);
+
+// 3. nacin kreiranja niza
+// npr neka FileList (myFileList)
+
+// const myFileListArr = Array.from(myFileList);
+
+const mixedExampleArr = [
+    1, 'Hello', false, {name: 'Test'}, [10,15,20]
+]
+
+for (let el of mixedExampleArr) {
+    if (Array.isArray(el)) { // ! Nacin kako da proverite da li je neka vrednost tipa Array
+        for (let underEl of el) {
+            console.log(underEl);
+        }
+    }
+}
+
+
+// ! Array metode
+
+// ! 1. PUSH - dodaje element na KRAJ niza i vraca novu duzinu niza
+
+const pushExampleArr = [1,2,3];
+
+let pushExampleArrLength = pushExampleArr.push(4);
+
+console.log(`Nova duzina push example niza je ${pushExampleArrLength}`);
+
+
+// ! 2. UNSHIFT - dodaje element na POCETAK niza i vraca novu duzinu niza
+
+const unshiftExampleArr = [1,2,3];
+
+let unshiftExampleArrLength = unshiftExampleArr.unshift(0);
+
+console.log(`Nova duzina unshift example niza je ${unshiftExampleArrLength}`);
+
+
+// ! 3. POP - uklanja element sa KRAJA niza, ali i vraca sam element koji je izbacen
+
+const popExampleArr = [10,11,12];
+
+let popedEl = popExampleArr.pop();
+
+console.log(popedEl); // 12 dobijamo jer je on izbacen pozivom POP metode nad nasim nizom
+
+
+// ! 4. SHIFT - uklanja element sa POCETKA niza, i vraca element koji je uklonjen
+
+let shiftedEl = popExampleArr.shift();
+
+console.log(shiftedEl);
+
+console.log(popExampleArr); // [11]
+
+
+// * Dodavanje elementa na tacno odredjeno mesto
+
+popExampleArr[1] = 30;
+
+console.log(popExampleArr);
+
+
+popExampleArr[1] = 40; // sada broj 40 POTPUNO menja broj 30 koji je do ovog momenta bio na indeksu 1 (tj na poziciji 2 u nizu)
+
+console.log(popExampleArr);
+
+
+popExampleArr[10] = 111;
+
+console.log(popExampleArr); // u ovom slucaju, JS pravi 8 praznih placeholder-a izmedju poslednjeg indeksa i onog koji smo dodali
+
+
+popExampleArr[6] = 'hi';
+
+console.log(popExampleArr); // (11) [11, 40, empty × 4, 50, empty × 3, 111]
+
+
+// ! SPLICE - koristi se za nekoliko stvari:
+
+// a) uklanja odredjeni broj elemenata iz niza OD odredjenog indeksa i kreira novi niz od tih obrisanih elemenata
+
+const langs = ['English', 'Serbian', 'Japanese', 'Korean', 'German'];
+
+console.log('Original array of langs -> ' + langs);
+
+const extractedLangs = langs.splice(2, 2);
+
+console.log(langs); // ['English', 'Serbian', 'German']
+
+console.log(extractedLangs); // ['Japanese', 'Korean']
+
+
+// b) moze da se koristi i za dodavanje elemenata na tacno odredjeno mesto
+
+langs.splice(2, 0, 'Norwegian');
+
+console.log(langs); // ovo ne brise 'German' element, veca ga gurne u desno pa je rezultat -> ['English', 'Serbian', 'Norwegian', 'German']
+
+
+// c) moze da se koristi i za brisanje svih elemenata nekog niza
+
+extractedLangs.splice(0); // brisemo SVE elemente pocevsi od prvog (posto je on na indeksu 0)
+
+console.log(extractedLangs); // []
+
+
+
+// d) moze se korisitti i za brisanje elemanta sa kraja niza prosledjivanje negativnog indeksa
+
+langs.splice(-1, 1); // brise samo poslednji element (jer od njega krecemo zbog indeksa -1, a deleteCount je 1)
+
+console.log(langs); // ['English','Serbian', 'Norwegian']
+
+
+// ! SLICE - vraca kopiju odredjenog dela niza ili celog niza
+
+const sliceArrExample = [1,2,3,4,5,6,7,8,9,10];
+
+// a) vracanje kopije dela niza
+
+const portionOfSliceArr = sliceArrExample.slice(0, 2);
+
+console.log(sliceArrExample); // [1,2,3,4,5,6,7,8,9,10] ostaje isti
+
+console.log(portionOfSliceArr); // [1,2] -> jer slice radi kopiranje od indeksa do indeksa (bez tog DO indeksa)
+
+
+// b) vracanje kopije celog niza (ali shallow kopije):
+
+const portionOfSliceArr2 = sliceArrExample.slice();
+
+sliceArrExample.push(100);
+
+console.log(sliceArrExample); // length je 11 (kod originala)
+ 
+console.log(portionOfSliceArr2); // length je 10 (kod kopije)
+
+
+const arrOfObjects = [
+    {
+        name: 'Petar'
+    }, {
+        name: 'Marko'
+    }
+];
+
+const arrOfObjectsCopy = arrOfObjects.slice();
+
+arrOfObjects.push({
+    name: 'Nikola'
+});
+
+console.log(arrOfObjects); // length je 3
+ 
+console.log(arrOfObjectsCopy); // length je 2
+
+
+
+// ! CONCAT - metoda koja spaja elemente nizova
+
+const allArray = arrOfObjects.concat(sliceArrExample, langs);
+
+console.log(allArray);
+
+
+
+// ! INDEX_OF i LAST_INDEX_OF metode - metode koje vracaju indekse elemenata
+
+// najcesce se koristi kada hocete da dobijete indeks elementa koji potom hocete da obrisete iz nekoga niza
+
+const indexOf100 = sliceArrExample.indexOf(100);
+
+console.log(`Index broja 100 u nizu brojeva je ${indexOf100}`);
+
+sliceArrExample.splice(indexOf100, 1);
+
+sliceArrExample.splice(4, 0, 10);
+
+console.log(sliceArrExample);
+
+const lastIndexOf10 = sliceArrExample.lastIndexOf(10);
+
+console.log(lastIndexOf10); // 10 (jer je to indeks POSLEDNJE pojave broja 10 u ovom nizu)
+
+console.log(sliceArrExample.indexOf(999)); // -1 vraca jer 999 nemamo kao element u nasem nizu
+
+if (sliceArrExample.indexOf(50) !== -1) {
+    alert('broj 50 postoji u nizu'); // ! ovde nikada ne ulazimo jer broj 50 NE POSTOJI u nizu, odnosno njegov indexOf je -1
+}
+
+
+
+// ! u slucaju referentnih tipova podataka indexOf i lastIndexOf ne funkcionisu
+
+const myStudents = [
+    {
+        name: 'Sara',
+        age: 25
+    },
+    {
+        name: 'Petar',
+        age: 25
+    },
+    {
+        name: 'Milan',
+        age: 28
+    }
+];
+
+console.log(myStudents.indexOf({
+    name: 'Petar',
+    age: 22
+})); // -1 , jer indexOf ne funkcionise nad referentnim tipovima podataka
+
+
+
+// ! FIND i FIND_INDEX metode
+
+// ! FIND - metoda vraca PRVI element koji zadovoljava uslov pretrage
+
+const femaleStudent = myStudents.find((s) => {
+    return s.age === 25;
+});
+
+console.log(femaleStudent);
+
+
+const milan = myStudents.find(student => student.name === 'Milan'); // dobar primer da FIND mozete korisitit i u 1 liniji koda
+
+console.log(milan);
+
+
+// ! FIND_INDEX - vraca indeks elementa koji trazimo na osnovu nekog uslova pretrage
+
+const idxOfPetar = myStudents.findIndex(student => student.name === 'Petar');
+
+console.log(`Petrov index je ${idxOfPetar}`);
+
+
+// ! INCLUDES - metoda proverava da li odredjeni element postoji u nizu
+
+const is100 = allArray.includes(100);
+
+const isWorld = allArray.includes('World');
+
+console.log(is100);
+
+console.log(isWorld);
+
+
+// * Provera da li odredjeni element postoji u nizu:
+// a) includes()
+// b) indexOf ili findIndex
+
+
+// TODO Domaci
+
+/**
+ *  1. Kreirati niz sa artiklima u radnji (svaki artikl ima svoj naziv i svoju cenu)
+ *  2. Dodati u niz artikala jos 2 elementa, jedan na pocetak, a drugi na kraj niza 
+ *  3. Na trece mesto u nizu dodati novi artikl, ali tako da se trenutno treci element NE OBRISE, vec samo pomeri za jedno mesto udesno
+ *  4. Obrisati poslednji element iz niza
+ *  5. Kreirati novi niz na osnovu samo poslednja tri elementa iz artikala
+ *  6. Iz tog novog niza, odvojiti samo prva dva elementa u novi niz
+*/
+
+const articles = [
+    {
+        name: 'Bread',
+        price: 50
+    },
+    {
+        name: 'Bannanas',
+        price: 30
+    },
+    {
+        name: 'Yogurt',
+        price: 10
+    }
+ ]
+ 
+ // 2.
+ articles.push({
+    name: 'Milk',
+    price: 6
+ });
+ 
+ articles.unshift({
+    name: 'Chocolate',
+    price: 12.55
+ });
+ 
+ 
+ // 3.
+ articles.splice(2,0, {
+    name: 'Orange Juice',
+    price: 50
+ });
+ 
+ console.log('articles', articles);
+ 
+ 
+ // 4.
+ 
+ // articles.pop();
+ 
+ articles.splice(-1,1);
+ 
+ console.log('articles', articles);
+ 
+ 
+ // 5.
+ 
+ const lastThreeArticles = articles.slice(-3);
+ 
+ console.log(lastThreeArticles);
+ 
+ // 6.
+ 
+ const firstTwoArticles = lastThreeArticles.slice(0,2);
+ 
+ console.log(firstTwoArticles);
