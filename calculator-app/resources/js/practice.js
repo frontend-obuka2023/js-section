@@ -2083,3 +2083,670 @@ allPrices.forEach((price, idx) => {
 })
 
 console.log(pricesWithPDV);
+
+
+
+// ! 11. cas (JS-a) (29. cas) 16.01.2024.
+
+console.log('-------- 11. cas (JS-a) (29. cas) --------');
+
+// Function chainning
+
+// ! duzi nacin - je da pravimo 3 varijable za 3 rezultata poziva razlicitih array metoda
+const newArr = areBiggerThenTen.filter(number => number > 15);
+const newArr2 = newArr.map(number => number * 2);
+const newArr3 = newArr2.reduce((prevVal, currVal) => {
+    return prevVal + currVal
+}, 0);
+
+console.log('Rezultat duzeg primera -> ', newArr3);
+
+const chainnedArr = areBiggerThenTen // [11, 23, 55, 123]
+    .filter(n => n > 15) // [23, 55, 123]
+    .map(n => n * 2) // [46, 110, 246]
+    .reduce((prevVal, currVal) => prevVal + currVal); // 402
+
+console.log('Rezultat kraceg primera -> ', chainnedArr);
+
+
+
+// ! FlatMap - metoda koja ide do dubine 1 (posto je ovo default argument)
+
+const bankAccs = [
+    {
+        holder: 'Marko Markovic',
+        transactions: [100,200,-150,300]
+    },
+    {
+        holder: 'Sara Saric',
+        transactions: [150,200,30,200]
+    },
+    {
+        holder: 'Marko Markovic',
+        transactions: [800,200,-450,300]
+    }
+]
+
+// Ines primer
+const allTr = [];
+const bankSaldo = bankAccs
+    .forEach(item => allTr.push(item.transactions));
+
+const finalSaldo = allTr
+    .flat()
+    .reduce((prevVal, currVal) => prevVal + currVal);
+
+console.log(`Final saldo of bank is ${finalSaldo}`);
+
+
+// Marko primer 1
+const bankSaldo1 = bankAccs
+    .map(item => item.transactions) // [[], [], []]
+    .flat()
+    .reduce((prevVal, currVal) => prevVal + currVal);
+
+console.log(finalSaldo === bankSaldo1 ? 'Isti saldo za oba primera' : 'Nije isti saldo za oba primera');
+
+// Marko primer uz flatMap
+const bankSaldo2 = bankAccs
+    .flatMap(item => item.transactions)
+    .reduce((prevVal, currVal) => prevVal + currVal);
+
+console.log(bankSaldo2);
+
+
+// ! SPLIT - metoda koja razdvaja elemente po odredjenom separatoru
+
+let someStr = 'Jupiter';
+
+console.log(someStr.split(''));
+
+someStr = 'Hello to our class.';
+
+console.log(someStr.split(' '));
+
+someStr = 'Marko Markovic (1995.), Novi Sad';
+
+console.log(someStr.split(' ')[0] + ' -> ' + someStr.split(' ')[1]);
+
+let someStrDivided = someStr.split(' ');
+
+
+// ! JOIN - metoda koja spaja elemente po odredjenom parametru
+
+let nameAndLastName = someStrDivided.join('_');
+
+console.log(nameAndLastName);
+
+
+// ! SOME - metoda koja proverava da li bar 1 element zadovoljava logicki uslov postavljen
+
+
+const checkBiggerThen10 = number => number > 10;
+
+console.log('Postoji bar 1 broj veci od 10 u nizu areBiggerThenTen : ' + areBiggerThenTen.some(checkBiggerThen10));
+
+if (areBiggerThenTen.some(num => num > 5000)) {
+    console.log('Postoji broj veci od 20!');
+}
+
+
+// ! EVERY - metoda koja proverava da li svaki element zadovoljava logicki uslov postavljen
+
+const isEveryNumBiggerThen20 = areBiggerThenTen.every(num => num > 20);
+
+console.log(isEveryNumBiggerThen20 ? 'Svaki broj je veci od 20' : 'Nisu svi brojevi veci od 20');
+
+// TODO proveriti da li je svaka transakcija sa racuna Sare Saric (bankAccs) bila uplata (pozitivni broj)
+
+const isEveryTrPositive = bankAccs
+    .find(item => item.holder === 'Sara Saric')
+    .transactions
+    .every(tr => tr > 0);
+
+console.log(`Sara je imala samo uplate: ${isEveryTrPositive ? 'DA' : 'NE'}`);
+
+
+
+// ! SPREAD operator - operator koji izvlaci iz niza pojedine elemente i vraca listu tih elemenata
+
+const addNums = (a,b,c) => {
+    return a+b+c;
+}
+
+let someNums = [5,10,15];
+
+let sumOfThreeNums = addNums(...someNums); // ! rascinimo someNums na posebne elemente - 5,10,15 i te pojedinace elemente saljemo kao argument funkciji
+
+console.log(sumOfThreeNums);
+
+
+// ! mozete niz kopirati (na nivou shallow kopije) uz pomoc spread operatora
+
+const someNumsCopy = [...someNums];
+
+someNumsCopy.push(50);
+
+console.log(someNums);
+console.log(someNumsCopy);
+
+
+let emp = [
+    {
+        name: 'Marko Markovic'
+    },
+    {
+        name: 'Pera Peric'
+    }
+];
+
+let empCopy = [...emp];
+
+empCopy[0].name = 'Marko New';
+
+console.log(emp);
+console.log(empCopy);
+
+let tNew = [
+    {
+        name: 'Pera',
+        age: 20
+    },
+    {
+        name: 'Mirko',
+        age: 30
+    }
+]
+
+let tNewCopy = structuredClone(tNew); // ! nacin kako mozemo napraviti DEEP KOPIJU (tj kopiju koja vise ne zavisi od orignala ni obrnuto) -> to znaci da npr mozemo menjati kopiju bez da uticemo na original
+
+tNewCopy[0].age = 44;
+
+console.log(tNew); // age = 20
+console.log(tNewCopy); // age = 44
+
+
+
+// ! Destrukturiranje niza - koncept kojim destrukturiramo (rascivijamo) niz u zasebne varijable
+
+let studentsList = ['Pera', 'Marko', 'Sara', 'Ana', 'Milan'];
+
+const [st1, st2, st3, st4, st5, st6] = studentsList; // ! kraci nacin - pomocu destrukturiranja niza
+// const st1New = studentsList[0]; // ! duzi nacin (5 linija koda bi nam trebalo za svakog studenta)
+// const st2New = studentsList[1];
+
+console.log(`Prvi student je ${st1}`);
+console.log(`Treci student je ${st3}`);
+console.log(st6); // ! undefined jer nismo inicijalizovali vrednost
+
+const stData = ['Marko', 'Markovic', 35, true, 'Master'];
+
+const [stName, stLName, ...additonalFields] = stData;
+
+console.log(stName + ' ' + stLName);
+console.log(additonalFields);
+
+
+// TODO 1. domaci 
+
+/*
+ *  1. Kreirati prodavnicu za odecu (5 item-a dodati)
+ *  2. Svaki odevni predmet ima svoj ID, naziv, cenu, moguce boje i moguce velicine
+ *  3. Dodati u korpu 3 item-a po izboru na osnovu njihovog ID-a, pri cemu se ID-evi artikla 
+ *     unose kroz jedan ISTI prompt prozor, pri cemu se ID-evi odvajaju zarezom (1,3,5 npr.)
+ *  4. Pronaci proizvode sa unesenim ID-evima i ispisati ih na konzoli svaki POJEDINACNO uz poruku 
+ *     'Chosen products are: ' nakon cega sledi lista odabranih proizvoda.
+ *  5. Poslednji proizvod iz korpe ukloniti (iz niza) i dodati neki drugi proizvod ciji se ID takodje unosi 
+ *     kroz prompt prozor.
+ *  6. Izracunati ukupnu cenu svih proizvoda iz korpe i ispisati je uz poruku `Total price is CENA $`
+ *  7. Na ukupnu cenu obracunati popust od 10 % i sniziti je za tu vrednost i ispisati je na konzoli uz poruku:
+ *     `Total Price with discount is CENA $`;
+ *  8. Proizvode iz korpe sortirati opadajuce po ceni
+ *  9. Ispisati sve moguce velicine proizvoda iz korpe (kao deo jednog niza)
+ *  10. Iz niza dobijenih velicina otkloniti duplikate (dakle jedna velicina se sme pojaviti samo jednom u istom tom nizu)
+*/
+
+// * 1. i 2.
+
+const clothes = [
+    {
+       id: 1,
+       name: 'T-shirt',
+       price: 20.00,
+       colors: ['blue', 'black', 'white'],
+       sizes: ['S', 'M', 'L']
+    },
+    {
+       id: 2,
+       name: 'Pants',
+       price: 40.00,
+       colors: ['gray', 'black', 'white'],
+       sizes: ['XL', 'M', 'L']
+    },
+    {
+       id: 3,
+       name: 'Hat',
+       price: 12.5,
+       colors: ['black', 'gray', 'white'],
+       sizes: ['S', 'M']
+    },
+    {
+       id: 4,
+       name: 'Socks',
+       price: 7.5,
+       colors: ['red', 'black', 'white'],
+       sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+       id: 5,
+       name: 'Hoodie',
+       price: 25.00,
+       colors: ['blue', 'black', 'white', 'yellow'],
+       sizes: ['S', 'M', 'L', 'XL', 'XXL']
+    },
+ ]
+ 
+ // 3. 
+ const enteredIds = prompt('Enter up to 3 clothes items'); // 2,3,4
+ 
+ // 4.
+ const basket = [];
+ const chosenIds = enteredIds
+    .split(',')
+    .map(id => +id);
+ 
+ console.log(chosenIds);
+ 
+ for(let id of chosenIds) {
+    for(let item of clothes) {
+       if(item.id === id) {
+          basket.push(item);
+       }
+    }
+ }
+ 
+ console.log(`Chosen products are:`, basket);
+ // basket.forEach(item => console.log(item));
+ 
+ 
+ // 5.
+ 
+ // basket.pop();
+ basket.splice(-1, 1);
+ console.log(basket);
+ 
+ const newProductID = prompt('Enter another product ID:');
+ 
+ const newProduct = clothes.find(product => +newProductID === product.id);
+ 
+ basket.push(newProduct);
+ 
+ console.log(basket);
+ 
+ 
+ 
+ // TODO 1. deo Domaceg -> dovrsiti ostalih 5 zadataka od gore
+ 
+ 
+ // 6.
+ let totalPrice = basket
+     .map(item => item.price)
+     .reduce((prevVal, currVal) => prevVal + currVal);
+ 
+ console.log(`Total price of basket is ${totalPrice} $`);
+ 
+ let discount = 0.1;
+ 
+ totalPrice -= totalPrice * discount;
+ 
+ console.log(`Total price with discount is ${totalPrice} $`);
+ 
+ 
+ // 7.
+ basket.sort((a,b) => {
+     return b.price - a.price;
+ });
+ 
+ console.log(basket);
+ 
+ 
+ // 8.
+ // let sizesArray = [...basket.flatMap(item => item.sizes)];
+ 
+ let sizesArray = basket
+     .slice()
+     .flatMap(item => item.sizes);
+ 
+ console.log(sizesArray);
+ 
+ // 9.
+ let filteredArray = sizesArray.filter((size, idx, sizesArray) => {
+     return sizesArray.indexOf(size) === idx;
+ });
+ 
+ console.log(filteredArray);
+
+
+
+// TODO 2. domaci
+// ! (KOMBINACIJE NIZOVA i FUNKCIJA)
+
+/**
+ * 1. Napisati funkciju koja klonira niz koji joj je prosledjen kao argument
+ * 2. Napisati funkciju koja vraca poslednji element iz niza koji joj je prosledjen kao argument
+ * 3. Napisati funkciju koja spaja sve elemente jednog niza u String
+ * 4. Napisati funkciju koja prihvata niz brojeva kao argument i za svaki od njih proverava da li je paran ili neparan.
+ *    Ukoliko je paran vraca `$BROJ is even`, u suprotnom `$BROJ is odd.` Ako je nula, onda `Number is zero!`
+ * 5. Napisati funkciju koja ce niz koji prihvati kao argument da sortira u rastucem redosledu (testirati na nizu Brojeva i nizu Stringova)
+ * 6. Napisati funkciju koja ispisuje elemente pod nizova. Npr ako su pod-nizovi [[1,2,3] , [4,5,6]] onda je rezultat funkcije:
+ *    `Array number $REDNI_BROJ_NIZA contains these elements: $ELEMENTI`
+ * 7. Napisati funkciju koja sabira ukupan PROIZVOD i ukupan ZBIR svih elemenata iz niza prosledjenog kao argument. Takodje, dodati
+ *    validaciju koja provera da li je SVAKI element iz prosledjenog niza broj. Ako bar jedan element nije broj, ispisati `Each element in
+ *    array has to be a number.`
+ * 8. Pozvati funkciju prompt() 3 puta i svakom prilikom uneti nesto u input polje. Unetu vrednost dodati u isti niz i na kraju ga ispisati.
+ * 9. Svaku vrednost iz prethodnog niza ukoliko je u pitanju broj zapisan u String formatu (npr '55') pretvoriti u broj 55 i pri tome ga zameniti
+ *    u nizu. Dakle, ako je '55' (string), pretvori se u 55 (broj) i potom se umesto '55' (stringa) sada u nizu treba naci 55 (broj)
+ * 10. Napisati funkciju koja ce za niz godina prosledjen kao argument utvrditi koja je od godina prestupna. Ako je prestupna, ispisati 
+ *     `$GODINA is a leap year!`
+ *     ! NAPOMENA: Godina je prestupna ako je deljiva za 400. Takodje, godina je prestupna ako je deljiva sa 4 i nedeljiva sa 100.
+ * 11. Napisati funkciju koja iz niza prihvacenog kao argument vraca duplikate
+ * 12. Napisati funkciju koja ce sabrati sve brojeve iz unije 3 niza
+ * 13. Napisati funkciju koja ce vrednosti 0, false, undefined, null otkloniti iz niza prosledjenog kao argument
+ * 14. Napisati funkciju koja ce ovaj niz sa knjigama sortirati rastuce po naslovu:
+ *      [
+ *          {
+ *              id: 1,
+ *              author: 'Steven King',
+ *              title: 'Misery'
+ *          },
+ *          {
+ *              id: 2,
+ *              author: 'Steven King',
+ *              title: 'The Shining'
+ *          },
+ *          {
+ *              id: 3,
+ *              author: 'Steven King',
+ *              title: 'Doctor Sleep'
+ *          }
+ *      ]
+ *  15. Napisati funkciju koja ce iz niza prosledjenog kao argument vratiti najveci broj 
+ *  16. Kreirati funkciju koja vraca niz koji inicijalno na svakoj poziciji ima broj 0 (dakle npr -> [0,0,0,0,0]); Parametar neka bude broj
+ *      koji odredjuje duzinu niza (npr ako se funkciji prosledi broj 5, onda se kreira niz od 5 elemenata (duzine 5)).
+ *  17. Napisati funkciju koja reverse-uje niz prosledjen kao argument. Npr [1,2,3] => [3,2,1]. Pokusati prvo BEZ reverse() funkcije.
+ *  18. Napisati funkciju koja vraca TRUE ako su dva niza identicna (ako su im svi elementi medjusobno isti)
+ *  19. Napisati funkciju koja vraca broj kopija u nizu. 
+ *      Ako ima duplikata ispisati: There are $BROJ_DUPLIKATA duplicates in this array
+ *      Ako nema duplikata ispisati: There are no duplicates in this array
+ *  20. Napisati funkciju koja ce za prosledjeni objekat (ucenika) sracunati prosek njegovih zakljucenih ocena na kraju godine.
+ *      Npr ako su predmeti sledeci: tehnicko: [3,4,5,5,4]
+ *                                   matematika: [5,2,3,5,4]
+ *                                   srpski jezik: [4,4,3,5,4]
+ *      Onda na osnovu ova 3 predmeta izvuci UKUPNU prosecnu ocenu i tu ocenu dodeliti tom uceniku kao prosek za kraj godine:
+ *      Npr: 'Pera Peric has an average grade: $PROSEK'
+ *      ! HINT: proveriti da li se moze FOR IN loop iskoristiti
+*/
+
+// 1.
+const cloneFunc = (array) => {
+    let arrayCopy = [...array];
+    return arrayCopy;
+ }
+ 
+ console.log('Clone function', cloneFunc([1,2,3,4,5]));
+ 
+ 
+ // 2.
+ const lastElementFunc = (array) => {
+    return array[array.length - 1];
+ }
+ 
+ console.log('Last element', lastElementFunc([19,'hello',22,33,'world']));
+ 
+ 
+ // 3.
+ const toStringFunc = (array) => {
+    return array.join(' ');
+ }
+ 
+ console.log('To String function', toStringFunc(['Sara', 'Pera', 'Marko', 'Lazar']));
+ 
+ 
+ // 4.
+ const checkIfEvenFunc = (numbers) => { // [3,7,10,23,0]
+    numbers.forEach((number) => {
+        if(number % 2 === 0 && number !== 0) {
+            console.log(`${number} is even.`);
+        } else if(number % 2 !== 0) {
+            console.log(`${number} is odd.`);
+        } else {
+            console.log('Number is 0.');
+        }
+    });
+ }
+ 
+ checkIfEvenFunc([3,7,10,23,0]);
+ 
+ 
+ // 5.
+ const sortAscFunc = (array) => {
+    if(array.every(element => typeof element === 'string')) {
+        return array.sort();
+    } else {
+        return array.sort((x,y) => x-y);
+    }
+ }
+ 
+ console.log(sortAscFunc([1,5,7,12,9,8,4,6]));
+ 
+ console.log(sortAscFunc(['Avocado', 'Az Alkmar', 'Yogurt', 'Bannanas', 'Milk', 'Cereals']));
+ 
+ 
+ // 6. 
+ const extractSubArraysFunc = (array) => {
+    array.forEach((arr, idx) => {
+        console.log(`Array ${idx+1} contains these elements:`);
+        arr.forEach(element => console.log(element));
+    })
+ }
+ 
+ extractSubArraysFunc([[1,4,5], ['test', 22, 33], [88, 99, 'hello']]);
+ 
+ 
+ // 7.
+ const calcFunc = (array) => {
+    if(array.every(element => typeof element === 'number')) {
+       const sum = array.reduce((prevVal, currVal) => prevVal + currVal);
+       const product = array.reduce((prevVal, currVal) => prevVal * currVal);
+       return `Result is ${sum + product}`; 
+    }
+    return `Each element in array has to be a number.`
+ }
+ 
+ console.log(calcFunc([1,5,10]));
+ 
+ console.log(calcFunc(['Avocado', 5, 6]));
+ 
+ 
+ // 8.
+ const promptArrFunc = () => {
+    const promptArr = [];
+    for(let i = 0; i < 3; i++) {
+        let item = prompt('Enter your value');
+        promptArr.push(item);
+    }
+    return promptArr;
+ }
+ 
+ // console.log('Prompt Array', promptArrFunc());
+ 
+ 
+ // 9.
+ const checkIfNumber = (array) => {
+    array.map((element, idx, array) => {
+        let parsedEl = parseInt(element);
+        if(!isNaN(parseInt(parsedEl))) {
+            array[idx] = parsedEl;
+        }
+    });
+    return array;
+ }
+ 
+ let promptArr = promptArrFunc();
+ let modifiedPromptArr = checkIfNumber(promptArr);
+ console.log('Modified Prompt Array', modifiedPromptArr);
+ 
+ 
+ // 10.
+ const checkLeapYearFunc = (years) => {
+    years.forEach(year => {
+        if(year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) {
+            console.log(`${year} is a leap year!`)
+        }
+    });
+ }
+ 
+ checkLeapYearFunc([2020, 2022, 1741, 1882, 2000]);
+ 
+ 
+ // 11.
+ const checkForDuplicateFunc = (array) => {
+    let duplicates = array.filter((element,idx,array) => {
+        return array.indexOf(element) !== idx;
+    });
+    return duplicates;
+ };
+ 
+ console.log('Duplicates', checkForDuplicateFunc([1,2,1,3,4,5,4,6,3,7,6,9]));
+ 
+ 
+ // 12.
+ const sumUnionFunc = (array1, array2, array3) => {
+    // const unionArr = array1.concat(array2, array3); // ! 1. nacin - spajanje pomocu CONCAT funkcije
+    const unionArr = [...array1, ...array2, ...array3]; // ! 2. nacin - spajanje pomocu SPREAD operatora
+    return unionArr.reduce((prevVal, currVal) => prevVal + currVal);
+ }
+ 
+ console.log(`Sum of union of arrays is: ${sumUnionFunc([1,2,3], [4,5,6], [7,8,9])}`);
+ 
+ 
+ // 13. 
+ const removeItemsFunc = (array) => {
+    array.forEach((item,idx,array) => {
+        if(item === null || item === undefined || item === 0 || item === false) {
+            array.splice(idx,1);
+        }
+    });
+    return array;
+ }
+ 
+ console.log('Removed unwanted items', removeItemsFunc([undefined, 1, null, 'hey', 0 , 100, false, true]));
+ 
+ 
+ // 14. 
+ const books = [
+    {
+        id: 1,
+        author: 'Steven King',
+        title: 'Misery'
+    },
+    {
+        id: 2,
+        author: 'Steven King',
+        title: 'The Shining'
+    },
+    {
+        id: 3,
+        author: 'Steven King',
+        title: 'Doctor Sleep'
+    }
+ ];
+ 
+ console.log(books.sort((a,b) => {
+    return a.title > b.title ? 1 : -1;
+ }));
+ 
+ 
+ // 15.
+ const findBiggestNum = (numbers) => {
+    return Math.max(...numbers);
+ }
+ 
+ console.log(`The biggest number is: ${findBiggestNum([1,4,111,2,3,5])}`);
+ 
+ 
+ // 16.
+ const createArrayFunc = (length) => {
+    let arr = new Array(length);
+    return arr.fill(0);
+ }
+ 
+ console.log('Filled with 0 array:', createArrayFunc(5));
+ 
+ 
+ // 17.
+ const reverseArray = (array) => {
+    const reversedArr = [];
+    for(let i = array.length-1; i >= 0; i--) {
+        reversedArr.push(array[i]);
+    }
+    return reversedArr;
+ }
+ 
+ console.log('Reversed Array', reverseArray([1,2,3,4,5]));
+ 
+ 
+ // 18.
+ const checkIfSameFunc = (array1, array2) => {
+    if(array1.length !== array2.length) {
+        return false;
+    }
+    const comparation = array1.map((item,idx) => array2[idx] === item);
+ 
+    return comparation.includes(false) ? false : true;
+ }
+ 
+ console.log('Arrays are same: ',checkIfSameFunc([1,2,3], [1,2,3])); // true
+ console.log('Arrays are same: ',checkIfSameFunc([1,12,3], [1,2,3])); // false
+ console.log('Arrays are same: ',checkIfSameFunc([1,2,3,10], [1,2,3])); // false
+ 
+ 
+ // 19.
+ const getArrayDuplicatesNumber = (array) => {
+    let counterOfDuplicates = 0;
+    array.filter((element,idx,array) => {
+        if(array.indexOf(element) !== idx) {
+            counterOfDuplicates++;
+        }
+    });
+    return counterOfDuplicates > 0 ? `There are ${counterOfDuplicates} duplicates in this array` : `There are no duplicates in this array`;
+ }
+ 
+ console.log(getArrayDuplicatesNumber([1,2,3,1,2,4,5,6,3])); // There are 3 duplicates in this array
+ 
+ console.log(getArrayDuplicatesNumber([1,2,3,4,5])); // There are no duplicates in this array
+ 
+ 
+ // 20.
+ const peraOb = {
+    name: 'Pera Peric',
+    grades: {
+        tehnicko: [4,3,2,4,5],
+        matematika: [4,4,2,5,4],
+        srpski: [5,5,4,3,2]
+    }
+ }
+ 
+ const findAnAverageFunc = (student) => {
+    const allGrades = [];
+    let average = 0;
+    for(let key in student.grades) {
+        for(let grade of student.grades[key]) {
+            allGrades.push(grade);
+        }
+    }
+    average = allGrades.reduce((prevVal, currVal) => prevVal + currVal, 0) / allGrades.length;
+    return average;
+ }
+ 
+ console.log(`${peraOb.name} has an average grade of ${findAnAverageFunc(peraOb)}`);
