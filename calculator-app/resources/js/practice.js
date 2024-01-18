@@ -2347,7 +2347,8 @@ const clothes = [
  ]
  
  // 3. 
- const enteredIds = prompt('Enter up to 3 clothes items'); // 2,3,4
+ // const enteredIds = prompt('Enter up to 3 clothes items'); // 2,3,4 // ! OVO JE DOBRO, zakomentarisano zbog nastavka ucenja
+ const enteredIds = '1,2,3'; // ! OVO JE TEST PODATAK
  
  // 4.
  const basket = [];
@@ -2375,7 +2376,8 @@ const clothes = [
  basket.splice(-1, 1);
  console.log(basket);
  
- const newProductID = prompt('Enter another product ID:');
+//  const newProductID = prompt('Enter another product ID:'); // ! OVO JE DOBRO, zakomentarisano zbog nastavka ucenja
+const newProductID = 4; // ! OVO JE TEST PODATAK
  
  const newProduct = clothes.find(product => +newProductID === product.id);
  
@@ -2441,7 +2443,7 @@ const clothes = [
  * 6. Napisati funkciju koja ispisuje elemente pod nizova. Npr ako su pod-nizovi [[1,2,3] , [4,5,6]] onda je rezultat funkcije:
  *    `Array number $REDNI_BROJ_NIZA contains these elements: $ELEMENTI`
  * 7. Napisati funkciju koja sabira ukupan PROIZVOD i ukupan ZBIR svih elemenata iz niza prosledjenog kao argument. Takodje, dodati
- *    validaciju koja provera da li je SVAKI element iz prosledjenog niza broj. Ako bar jedan element nije broj, ispisati `Each element in
+ *    validaciju koja proverava da li je SVAKI element iz prosledjenog niza broj. Ako bar jedan element nije broj, ispisati `Each element in
  *    array has to be a number.`
  * 8. Pozvati funkciju prompt() 3 puta i svakom prilikom uneti nesto u input polje. Unetu vrednost dodati u isti niz i na kraju ga ispisati.
  * 9. Svaku vrednost iz prethodnog niza ukoliko je u pitanju broj zapisan u String formatu (npr '55') pretvoriti u broj 55 i pri tome ga zameniti
@@ -2572,7 +2574,8 @@ const cloneFunc = (array) => {
  const promptArrFunc = () => {
     const promptArr = [];
     for(let i = 0; i < 3; i++) {
-        let item = prompt('Enter your value');
+        // let item = prompt('Enter your value'); // ! OVO JE DOBRO, zakomentarisano je samo zbog nastavka ucenja
+        let item = 1; // ! TEST VREDNOST
         promptArr.push(item);
     }
     return promptArr;
@@ -2750,3 +2753,228 @@ const cloneFunc = (array) => {
  }
  
  console.log(`${peraOb.name} has an average grade of ${findAnAverageFunc(peraOb)}`);
+
+
+
+
+// ! 12. cas JS-a (30. cas)  18.01.2024.
+
+console.log('-------------- 12. cas JS-a (30. cas) -------------');
+
+//  ! OBJECTS 
+
+const studentObExample = {
+    name: 'Marko Markovic',
+    age: 25,
+    gender: 'male',
+    courses: ['OOP Java', 'JavaScript', '.NET'],
+    isStudent: true,
+    address: {
+        street: 'Bul. Osl. 1',
+        zipCode: 21000,
+        city: 'Novi Sad',
+        apartment: {
+            number: 2,
+            floor: 1
+        }
+    }
+};
+
+// * pristupanje property-ima:
+console.log(`${studentObExample.name} zivi na spratu ${studentObExample.address.apartment.floor}`);
+
+// * dodeljivanje property-a:
+studentObExample.isBudgetStudent = false;
+
+console.log(studentObExample);
+
+// ! Sada je studying zapravo metoda objekta studentObExample
+studentObExample.studying = function() {
+    console.log('I am studying'); 
+}
+
+studentObExample.studying(); // ovde pozivamo metodu studying objekta studentObExample
+
+// * modifikovanje property-a:
+studentObExample.age = 26;
+studentObExample.isBudgetStudent = true;
+
+
+// * Brisanje property-a:
+delete studentObExample.gender; 
+
+console.log(studentObExample);
+
+
+// ! SQUARE BRACKET sintaksa
+console.log(`Student se zove ${studentObExample['name']}`);
+
+let prop = 'courses';
+
+console.log(`Kursevi ovog studenta su: ${studentObExample[prop]}`);
+
+for (let p in studentObExample) {
+    console.log(studentObExample[p]);
+}
+
+let avgGrade = 'averageGrade';
+
+studentObExample[avgGrade] = 7.56;
+
+console.log(studentObExample);
+
+
+
+// ! JSON interfejs - interfejs koji vam pruza metode za kreiranje objekta i za pretvaranje objekta u string
+
+// ! 1. PARSE metoda - metoda koja daje mogucnost da string (zapisan u nekom JSON formatu) parsirate u JS objekat
+// ! u validnom JSON formatu svaki property se nalazi pod double quotovi (pod duplim navodnicima)
+
+let stringResponse = '{"id": 101, "name": "Sara Saric", "isStudent": true}';
+
+let responseOb = JSON.parse(stringResponse);
+
+console.log(responseOb);
+
+
+// ! 2. STRINGIFY - metoda koja daje mogucnost da JSON objekat pretvorite u String zapis
+
+responseOb.age = 22;
+
+let backToString = JSON.stringify(responseOb);
+
+console.log(backToString);
+
+
+
+// ! KOPIRANJE OBJEKATA
+
+const car = {
+    name: 'Audi A6',
+    gasTypes: ['diesel', 'gas'],
+    gears: 6
+};
+
+const carCopy = car;  // ! ovim dobijamo kopiranje reference (a ne vrednosti), sto znaci da i carCopy i car reference gadjaju isti objekat u memoriji
+
+carCopy.gears = 5;
+
+console.log(car);
+console.log(carCopy);
+
+
+// * Spread operator -> moze se koristiti za pravljenje SHALLOW (slaba) kopija
+
+const carCopy2 = {...car};
+
+carCopy2.name = 'BMW X6';
+
+console.log(car);
+console.log(carCopy2);
+
+carCopy.gasTypes.push('benzin');
+
+console.log(car);
+console.log(carCopy2);
+
+
+
+// * Za deep kopiju : 
+
+// * 1. opcija - structuredClone() - bolja opcija za pravljenje deep kopija
+
+const carCopy3 = structuredClone(car);
+
+carCopy3.gears = 7;
+carCopy3.gasTypes.push('nuclear');
+
+console.log(car);
+console.log(carCopy3);
+
+
+// * 2. opcija - JSON.parse(JSON.stringify(imeObjekta))
+
+const carCopy4 = JSON.parse(JSON.stringify(car));
+
+carCopy4.gasTypes.pop();
+
+console.log(car);
+console.log(carCopy4);
+
+
+
+
+const nizOr = [
+    10, 20, [50,100]
+];
+
+// ! shallow kopija (slaba kopija) 
+const nizCopy = [...nizOr];
+
+nizCopy[2].push(150);
+
+console.log(nizOr);
+console.log(nizCopy);
+
+
+// ! deep kopija
+const nizCopy1 = structuredClone(nizOr);
+
+nizCopy1[2].push(200);
+
+console.log(nizOr);
+console.log(nizCopy1);
+
+
+
+// ! Object destructing
+
+const book = {
+    id: Math.ceil((Math.random() * 100)), // generisanje random broja od 0 do 100
+    bookName: 'Harry Potter',
+    writter: 'J.K. Rowling',
+    editions: [1,2,3,4,5,6],
+    pages: 550
+}
+
+console.log(book);
+
+const {editions} = book; // ! mozete hvatati pojedinace propertye nekog objekta i smestati ih u varijable (npr editions)
+
+console.log(`Edicije su ${editions}`);
+
+const {id, bookName, writter} = book; // ! mozete hvatati visestruke propertye nekog objekta i smestati ih u varijable (npr id, bookName i writter odjednom)
+
+console.log(id, bookName, writter);
+
+const {pages, ...otherBookProps} = book;
+
+console.log(pages); // pages (550)
+console.log(otherBookProps); // sve ostale propertye book objekta u formi objekta
+
+
+
+// ! Provera da li neki property postoji u objektu
+
+// 1. nacin - koristi IN kljucnu rec (preporuka da koristite IN operator)
+
+if ('pages' in book) {
+    console.log('Pages prop exists in book object');
+}
+
+if (!('numberOfPages' in book)) {
+    book.numberOfPages = 1000;
+}
+
+console.log(book);
+
+
+// 2. nacin - provera undefined vrednosti
+
+if (book.available === undefined) {
+    book.available = true;
+} else {
+    book.available = false;
+}
+
+console.log(book);
