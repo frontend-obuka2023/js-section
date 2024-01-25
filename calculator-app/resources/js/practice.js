@@ -2978,3 +2978,184 @@ if (book.available === undefined) {
 }
 
 console.log(book);
+
+
+
+// ! 14. cas JS-a (32. cas) 
+
+console.log('----------- 14. cas JS-a (32. cas) -----------');
+
+// ! THIS referenca je referenca koja se odnosi na objekat koji je trenutno u kontekstu izvrsavanja.
+// ! To znaci da se THIS referenca odnosi na objekat unutar kojeg se trenutno nalazi funkcija koja se izvrsava
+
+// ! U globalnom kontekstu THIS se odnosi na globalni objekat (to je u browserima window objekat).
+
+let myPerson = {
+    firstName: 'Sara',
+    lastName: 'Saric',
+    age: 30,
+    fullName: function() {
+        return `Puno ime i prezime je: ${this.firstName} ${this.lastName}`;
+    }
+}
+
+console.log(myPerson.fullName());
+
+console.log(this); // Sada THIS gadja globalni objekat, a to je WINDOW 
+
+
+
+// ! Call - ova metoda se koristi za pozivanje funkcija i eksplicitno postavljanje THIS vrednosti
+
+function greetPerson(message) {
+    console.log(message + ', ' + this.firstName);
+}
+
+greetPerson.call(myPerson, 'Dobro dosao na nas sajt');
+
+const myPerson2 = {
+    firstName: 'Marko',
+    lastName: 'Markovic'
+}
+
+greetPerson.call(myPerson2, 'Dobro dosao na nas sajt');
+
+const persons = [myPerson, myPerson2];
+
+for (let p of persons) {
+    greetPerson.call(p, 'Pozdrav');
+}
+
+const ob = {};
+
+// let ime = prompt('Unesi ime');
+let ime = 'Petar';
+
+ob.firstName = ime;
+
+greetPerson.call(ob, 'Dobrodosao');
+
+
+// ! Apply - je metoda koja je identican call metodi, ali svoje dodatne argumente prihvata kao niz
+
+function greetPersonNew(message, info) {
+    console.log(message + ' ' + this.firstName + '. ' + info);
+}
+
+const myPerson3 = {
+    firstName: 'Milan'
+};
+
+greetPersonNew.apply(myPerson3, ['Cao', 'Upsesno si se registrovao na nas sajt!']);
+
+
+// ! Bind - je metoda koja kreira novu funkciju sa fiksnim THIS vrednostima i argumentima (ako su prosledjeni)
+// ! Bind ne poziva funkciju odmah (kao sto su to radili call i apply), nego vraca novu funkciju
+
+function greetPersonNewest(message) {
+    console.log(message + ', ' + this.firstName);
+}
+
+const myPerson4 = {
+    firstName: 'Peter'
+};
+
+const greetPeter = greetPersonNewest.bind(myPerson4, 'Hello');
+
+greetPeter();
+
+
+// ! NAPOMENE
+/**
+ * Kod function declaration formata dodavanje poziva CALL, APPLY i BIND nakon zatvorene viticaste zagrade NE RADI
+ * Kod function expression formata dodavanje poziva CALL, APPLY i BIND nakon zatvorene viticaste zagrade RADI
+ */
+
+const f1 = function() {
+    console.log(this)
+}.bind({id: 5, name: 'my book'});
+
+f1();
+
+
+// TODO Domaci:
+
+// 1. Napisati funkciju koja update-uje zipCode prosledjenog objekta
+
+const updateZipCode = function() {  // 0.1231321231  -->  12313.3213323 --> 12314
+    this.zipCode = Math.ceil(Math.random() * 100000);
+    console.log(`New zip code for ${this.city} is ${this.zipCode}`);
+}.call({city: 'Novi Sad', zipCode: 21000});
+
+
+// 2. Kreirati funkciju koja na konzoli ispisuje objekat koji prosledjujemo kao THIS same funkcije
+
+
+const cityNoviSad = {
+    name: 'Novi Sad',
+    zipCode: 21000,
+    lat: 0.1231231231,
+    long: 0.8783247832
+}
+
+const getData = function() {
+    console.log(this);
+}.call(cityNoviSad); // {name: 'Novi Sad', zipCode: 21000, lat: 0.1231231231, long: 0.8783247832}
+
+
+// 3. Kreirati funkciju za update cityNoviSad objekta prosledjenim parametrima call funkcije.
+
+const updateCityNoviSad = function(country, newLat, newLong) {
+    this.country = country;
+    this.lat = newLat;
+    this.long = newLong;
+    console.log(this);
+}.call(cityNoviSad, 'SRB', 0.8191238318, 0.9991919191); // {name: 'Novi Sad', zipCode: 21000, lat: 0.8191238318, long: 0.9991919191, country: 'SRB'}
+
+
+
+// 4. Kreirati funkciju nad kojom se primenjuje apply koji ce dodeliti 2 nova atributa objektu cityNoviSad: region i population
+
+const newData = ['Vojvodina', 300000];
+
+const updateDataWithApply = function(region, population) {
+    this.region = region;
+    this.population = population;
+    console.log(this);
+}.apply(cityNoviSad, newData);
+
+
+// 5. Kreirati objekat person sa atributom name (npr 'Marko') i
+//    sa ugnjezdenim objektom kao property-em objekta koji ima isto name atribut (npr 'Petar') i metodom unutar njega koja vraca ime osobe.
+//    Metodu getName() pozvati i za prvi name atribut i za drugi.
+
+let person = {
+    name : 'Marko',
+    data : {
+        name : "Petar",
+        getName : function() {
+            return this.name;
+        }
+    }
+}
+
+console.log(person.data.getName.call(person)); // Marko
+
+console.log(person.data.getName.call(person.data)); // Petar
+
+
+// 6. Kreirati objekat zipCode sa value atributom (npr 33000) i metodom checkZipCode. 
+//    Unutar metode, kreirati funkciju updateZipCode koja menja zipCode sa 33000 na 55000 za zipcode objekat.
+
+const zipcode = {
+    value: 33000,
+    checkZipcode : function() {
+        console.log(this);
+        const updateZipCode = function() {
+            this.value = 55000;
+            console.log(this);
+        }.bind(this);
+        updateZipCode();
+    }
+}
+zipcode.checkZipcode();
