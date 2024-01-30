@@ -125,3 +125,72 @@ promise
     .catch(error => console.log(error.message));
 
 
+let pr1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('You have logged in successfully to your Instagram Account.');
+    }, 4000);
+});
+
+let pr2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Here are your posts: .... ');
+    }, 5000);
+});
+
+// ! Promise.all - metoda za rukovanje visestrukim promise-ima
+
+Promise.all([pr1, pr2])
+    .then(results => {
+        console.log(results);
+    })
+    .catch(error => console.log(error))
+    .finally(() => {
+        console.log('Finally ce se uvek izvrsiti.')
+    })
+
+
+
+// * 3. nacin - ASYNC - AWAIT
+
+// * Ove kljucne (rezervisane) reci se koriste u kontekstu pisanja asinhronog koda "na sinhroni nacin"
+
+const getItem = (itemId) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve({
+                itemName: 'Samsung S23',
+                colors: ['black', 'gray', 'space gray'],
+                memory: '256gb'
+            });
+            reject(new Error('Error occured while fetching the data for your device.'));
+        }, 8000);
+    });
+}
+
+const getItemAdditionalDescription = (itemName) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            // resolve({
+            //     itemAdditionalDesc: 'Smart Phone made by Samsung company. The best in the market at the moment...'
+            // });
+            reject(new Error('Error occured while fetching additional description for your device.'));
+        }, 500);
+    });
+}
+
+// Sinhroni nacin pisanja asinhronog koda (UVEK kada pisete async - await pozive koristite TRY - CATCH blok)
+async function showItemData() {
+    try {
+        const item = await getItem('SMSNG-12345');
+        const itemDesc = await getItemAdditionalDescription(item.itemName);
+        console.log(`${item.itemName} has following additional description: ${itemDesc.itemAdditionalDesc}`);
+    } catch (error) {
+        console.log(error.message);
+    } finally {
+        console.log('Spinner has stopped.');
+    }
+}
+
+showItemData();
+
+console.log('Ja sam sinhrona f-ja');
